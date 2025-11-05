@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Cart</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background-color: #fafafa; }
+    h1 { color: #333; }
+    li { background: #fff; margin: 10px 0; padding: 10px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    a { text-decoration: none; color: #0078D7; }
+  </style>
+</head>
+<body>
+  <h1>🛒 Your Cart</h1>
+  {% if cart %}
+    <ul>
+      {% for item in cart %}
+        <li>{{ item['name'] }} - ${{ "%.2f"|format(item['price']) }}</li>
+      {% endfor %}
+    </ul>
+    <h3>Total: ${{ "%.2f"|format(total) }}</h3>
+    <a href="{{ url_for('checkout') }}">Proceed to Checkout ✅</a><br>
+  {% else %}
+    <p>Your cart is empty.</p>
+  {% endif %}
+  <hr>
+  <a href="{{ url_for('index') }}">Continue Shopping 🏬</a>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>E-Commerce Store</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background-color: #fafafa; }
+    h1 { color: #333; }
+    ul { list-style-type: none; padding: 0; }
+    li { background: #fff; margin: 10px 0; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    a { text-decoration: none; color: #0078D7; }
+    a:hover { text-decoration: underline; }
+    .btn-cart { display: inline-block; margin-top: 15px; background: #0078D7; color: white; padding: 8px 12px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>🛍️ Welcome to My Store</h1>
+  <ul>
+    {% for p in products %}
+      <li>
+        <b>{{ p['name'] }}</b> - ${{ "%.2f"|format(p['price']) }} <br>
+        <small>{{ p['description'] }}</small><br>
+        <a class="btn-cart" href="{{ url_for('add_to_cart', product_id=p['id']) }}">Add to Cart</a>
+      </li>
+    {% endfor %}
+  </ul>
+  <hr>
+  <a href="{{ url_for('cart') }}">View Cart 🛒</a>
+</body>
+</html>
