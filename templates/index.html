@@ -1,23 +1,26 @@
-<form method="get" action="/">
-  <input type="text" name="search" placeholder="Search products..." value="{{ search_query }}">
-  <select name="category">
-    <option value="">All Categories</option>
-    {% for cat in categories %}
-      <option value="{{ cat['category'] }}" {% if cat['category'] == category_filter %}selected{% endif %}>{{ cat['category'] }}</option>
-    {% endfor %}
-  </select>
-  <button type="submit">Filter</button>
-</form>
-
-<hr>
-<ul>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Store</title>
+  <style>
+    body { font-family: Arial; margin: 40px; background: #fafafa; }
+    .product { background: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 0 4px rgba(0,0,0,0.1); }
+    a { text-decoration: none; color: #0078D7; }
+    .btn { background: #0078D7; color: white; padding: 6px 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>🛍️ Product List</h1>
   {% for p in products %}
-    <li>
-      <b>{{ p['name'] }}</b> ({{ p['category'] }}) - ${{ "%.2f"|format(p['price']) }} <br>
-      <small>{{ p['description'] }}</small><br>
-      <a class="btn-cart" href="{{ url_for('add_to_cart', product_id=p['id']) }}">Add to Cart</a>
-    </li>
+    <div class="product">
+      <b>{{ p['name'] }}</b> - ${{ "%.2f"|format(p['price']) }} <br>
+      <small>{{ p['description'] }}</small><br><br>
+      <a class="btn" href="{{ url_for('add_to_cart', product_id=p['id']) }}">Add to Cart</a>
+    </div>
   {% endfor %}
-</ul>
-<a href="{{ url_for('cart') }}">View Cart 🛒</a>
+  <hr>
+  <a href="{{ url_for('cart') }}">View Cart 🛒</a>
+</body>
+</html>
+
 
