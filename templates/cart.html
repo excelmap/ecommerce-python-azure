@@ -1,55 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Your Cart</title>
+  <title>🛒 Your Cart</title>
   <style>
-    body { font-family: Arial; margin: 40px; background: #fafafa; }
-    table { width: 80%; margin: auto; border-collapse: collapse; background: #fff; }
-    th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: center; }
+    body { font-family: Arial, sans-serif; margin: 40px; background: #fafafa; }
+    h1 { color: #0078D7; text-align: center; }
+    table { width: 80%; margin: auto; border-collapse: collapse; background: white; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
     th { background: #0078D7; color: white; }
-    .btn { padding: 5px 10px; background: #0078D7; color: white; border-radius: 5px; text-decoration: none; }
+    tr:nth-child(even) { background: #f9f9f9; }
+    .btn { background: #0078D7; color: white; padding: 6px 10px; border-radius: 5px; text-decoration: none; }
+    .btn:hover { background: #005fa3; }
+    .center { text-align: center; margin-top: 20px; }
+    a { color: #0078D7; text-decoration: none; }
   </style>
 </head>
 <body>
-  <h1 style="text-align:center;">🛒 Your Cart</h1>
+
+  <h1>🛍️ Shopping Cart</h1>
+
   {% if cart %}
-  <table>
-    <tr>
-      <th>Product</th><th>Price</th><th>Qty</th><th>Subtotal</th><th>Action</th>
-    </tr>
-    {% for item in cart %}
-    <tr>
-      <td>{{ item['name'] }}</td>
-      <td>${{ "%.2f"|format(item['price']) }}</td>
-      <td>
-        <a href="{{ url_for('update_quantity', product_id=item['id'], action='decrease') }}">➖</a>
-        {{ item['quantity'] }}
-        <a href="{{ url_for('update_quantity', product_id=item['id'], action='increase') }}">➕</a>
-      </td>
-      <td>${{ "%.2f"|format(item['price'] * item['quantity']) }}</td>
-      <td><a class="btn" href="{{ url_for('remove_from_cart', product_id=item['id']) }}">Remove ❌</a></td>
-    </tr>
-    {% endfor %}
-  </table>
-  <h3 style="text-align:center;">Total: ${{ "%.2f"|format(total) }}</h3>
-  <form method="post" action="{{ url_for('checkout') }}" style="text-align:center;">
-    <input type="hidden" name="total" value="{{ total }}">
-    <label>Payment Type:</label>
-    <select name="payment_type" required>
-      <option value="Cash on Delivery">Cash on Delivery</option>
-      <option value="Credit Card">Credit Card</option>
-      <option value="PayPal">PayPal</option>
-    </select>
-    <button type="submit" class="btn">Checkout ✅</button>
-  </form>
+    <table>
+      <tr>
+        <th>Product</th>
+        <th>Price ($)</th>
+        <th>Quantity</th>
+        <th>Total ($)</th>
+        <th>Actions</th>
+      </tr>
+      {% for item in cart %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ "%.2f"|format(item.price) }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ "%.2f"|format(item.price * item.quantity) }}</td>
+        <td>
+          <a class="btn" href="{{ url_for('update_quantity', product_id=item.id, action='increase') }}">+</a>
+          <a class="btn" href="{{ url_for('update_quantity', product_id=item.id, action='decrease') }}">-</a>
+          <a class="btn" style="background:#d9534f" href="{{ url_for('remove_from_cart', product_id=item.id) }}">🗑 Remove</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <div class="center">
+      <h3>Total: ${{ "%.2f"|format(total) }}</h3>
+      <a class="btn" href="{{ url_for('checkout') }}">Proceed to Checkout ➡</a>
+    </div>
   {% else %}
-    <p style="text-align:center;">Your cart is empty.</p>
+    <div class="center">
+      <p>Your cart is empty 🛍️</p>
+      <a class="btn" href="{{ url_for('index') }}">Continue Shopping</a>
+    </div>
   {% endif %}
-  <div style="text-align:center; margin-top:20px;">
-    <a class="btn" href="{{ url_for('index') }}">Continue Shopping 🏬</a>
+
+  <div class="center">
+    <a href="{{ url_for('index') }}">⬅ Back to Store</a>
   </div>
+
 </body>
 </html>
+
 
 
 

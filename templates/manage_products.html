@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>🧾 Manage Products</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #fafafa; }
+    h1 { color: #0078D7; text-align: center; }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .topbar a {
+      text-decoration: none;
+      color: #0078D7;
+      font-weight: bold;
+      margin: 0 10px;
+    }
+    table {
+      width: 90%;
+      margin: auto;
+      border-collapse: collapse;
+      background: white;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background: #0078D7;
+      color: white;
+    }
+    tr:nth-child(even) { background: #f9f9f9; }
+    .btn {
+      background: #0078D7;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .btn:hover { background: #005fa3; }
+    .delete-btn {
+      background: #d9534f;
+      color: white;
+    }
+    .delete-btn:hover { background: #c9302c; }
+    .center { text-align: center; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <div class="topbar">
+    <div>
+      <a href="{{ url_for('index') }}">🏬 Back to Store</a>
+      <a href="{{ url_for('add_product') }}">➕ Add Product</a>
+    </div>
+    <div>
+      <a href="{{ url_for('admin_logout') }}">🚪 Logout</a>
+    </div>
+  </div>
+
+  <h1>🧾 Manage Products</h1>
+
+  {% if products %}
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price ($)</th>
+        <th>Stock</th>
+        <th>Action</th>
+      </tr>
+      {% for p in products %}
+      <tr>
+        <td>{{ p['id'] }}</td>
+        <td>{{ p['name'] }}</td>
+        <td>{{ "%.2f"|format(p['price']) }}</td>
+        <td>{{ p['stock'] }}</td>
+        <td>
+          <a class="delete-btn btn" href="{{ url_for('delete_product', product_id=p['id']) }}">🗑 Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <div class="center">
+      <p>No products available yet.</p>
+      <a class="btn" href="{{ url_for('add_product') }}">➕ Add New Product</a>
+    </div>
+  {% endif %}
+
+</body>
+</html>
+

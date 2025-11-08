@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>➕ Add Product</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #fafafa; }
+    h1 { color: #0078D7; text-align: center; }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .topbar a {
+      text-decoration: none;
+      color: #0078D7;
+      font-weight: bold;
+      margin: 0 10px;
+    }
+
+    form {
+      width: 350px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input[type=text],
+    input[type=number] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[type=submit] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      background: #0078D7;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    input[type=submit]:hover {
+      background: #005fa3;
+    }
+
+    .center { text-align: center; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <div class="topbar">
+    <div>
+      <a href="{{ url_for('manage_products') }}">🧾 Manage Products</a>
+      <a href="{{ url_for('index') }}">🏬 Back to Store</a>
+    </div>
+    <div>
+      <a href="{{ url_for('admin_logout') }}">🚪 Logout</a>
+    </div>
+  </div>
+
+  <h1>➕ Add New Product</h1>
+
+  <form method="POST">
+    <label>Product Name:</label>
+    <input type="text" name="name" required>
+
+    <label>Price ($):</label>
+    <input type="number" step="0.01" name="price" required>
+
+    <label>Stock Quantity:</label>
+    <input type="number" name="stock" min="0" required>
+
+    <input type="submit" value="Add Product">
+  </form>
+
+  <div class="center">
+    <a href="{{ url_for('manage_products') }}">⬅ Back to Manage Products</a>
+  </div>
+
+</body>
+</html>

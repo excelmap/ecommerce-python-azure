@@ -1,26 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Store</title>
+  <title>🛍️ Store</title>
   <style>
-    body { font-family: Arial; margin: 40px; background: #fafafa; }
-    .product { background: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 0 4px rgba(0,0,0,0.1); }
-    a { text-decoration: none; color: #0078D7; }
-    .btn { background: #0078D7; color: white; padding: 6px 10px; border-radius: 5px; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #fafafa;
+    }
+    h1 {
+      color: #0078D7;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .topbar a {
+      text-decoration: none;
+      color: #0078D7;
+      font-weight: bold;
+    }
+    .product {
+      background: #fff;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    }
+    .btn {
+      background: #0078D7;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: #005fa3;
+    }
+    hr {
+      margin: 20px 0;
+    }
   </style>
 </head>
 <body>
-  <h1>🛍️ Product List</h1>
-  {% for p in products %}
-    <div class="product">
-      <b>{{ p['name'] }}</b> - ${{ "%.2f"|format(p['price']) }} <br>
-      <small>{{ p['description'] }}</small><br><br>
-      <a class="btn" href="{{ url_for('add_to_cart', product_id=p['id']) }}">Add to Cart</a>
+
+  <!-- Top Navigation -->
+  <div class="topbar">
+    <h1>🛒 E-Commerce Store</h1>
+    <div>
+      <a href="{{ url_for('cart') }}">🛍️ View Cart</a> |
+      <a href="{{ url_for('admin_login') }}">🔐 Admin Login</a>
     </div>
-  {% endfor %}
+  </div>
+
   <hr>
-  <a href="{{ url_for('cart') }}">View Cart 🛒</a>
+
+  <!-- Product List -->
+  {% if products %}
+    {% for p in products %}
+      <div class="product">
+        <b>{{ p['name'] }}</b> — ${{ "%.2f"|format(p['price']) }} <br>
+        <small>Stock: {{ p['stock'] }}</small><br><br>
+        <a class="btn" href="{{ url_for('add_to_cart', product_id=p['id']) }}">Add to Cart</a>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No products available at the moment. Please check back soon!</p>
+  {% endif %}
+
+  <hr>
+
+  <p><a href="{{ url_for('cart') }}">🛒 Go to Cart</a></p>
+
 </body>
 </html>
-
 
